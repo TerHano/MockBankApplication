@@ -13,7 +13,7 @@ namespace BankingApplication
         static void Main(string[] args)
         {
 
-            AbstractBank WellsForgo = new Bank("WellsForgo");
+            AbstractBank WellsForgo = new Bank("Wells Fargo");
             AbstractBank AllyBank = new Bank("Ally Bank");
 
             int AccNum = WellsForgo.addBankAccount(BankAccountTypeEnum.CHECKING_ACCOUNT,"Tod");

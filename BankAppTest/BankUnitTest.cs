@@ -16,20 +16,22 @@ namespace BankAppTest
         [SetUp]
         public void Setup()
         {
-            AbstractBank WellsForgo = new Bank("WellsForgo");
+            AbstractBank WellsFargo = new Bank("WellsFargo");
 
-            int AccNum = WellsForgo.addBankAccount(BankAccountTypeEnum.CHECKING_ACCOUNT, "Tod");
+            int AccNum = WellsFargo.addBankAccount(BankAccountTypeEnum.CHECKING_ACCOUNT, "Tod");
 
-            account = WellsForgo.getBankAccount(AccNum);
+            account = WellsFargo.getBankAccount(AccNum);
             account.Deposit(1000);
         }
 
         [Test]
         public void CheckingDepositTest()
         {
-           
-
-            Assert.AreEqual(account.getBalance(),1000);
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual(account.getBalance(), 1000);
+                Assert.Throws<TransactionException>(() => account.Deposit(-200));
+            });
         }
 
         [Test]
@@ -41,13 +43,19 @@ namespace BankAppTest
         }
 
         [Test]
+        public void CheckingWithdrawOverDrawTest()
+        {
+            Assert.Throws<TransactionException>(()=>account.Withdraw(8000));
+        }
+
+        [Test]
         public void IndividualDepositTest()
         {
-            AbstractBank WellsForgo = new Bank("WellsForgo");
+            AbstractBank WellsFargo = new Bank("WellsFargo");
 
-            int AccNum = WellsForgo.addBankAccount(BankAccountTypeEnum.INDIVIDUAL_ACCOUNT, "Mo");
+            int AccNum = WellsFargo.addBankAccount(BankAccountTypeEnum.INDIVIDUAL_ACCOUNT, "Mo");
 
-            var account = WellsForgo.getBankAccount(AccNum);
+            var account = WellsFargo.getBankAccount(AccNum);
             account.Deposit(1000);
 
             Assert.AreEqual(account.getBalance(), 1000);
@@ -57,10 +65,10 @@ namespace BankAppTest
         public void IndividualWithdrawTest()
         {
 
-            AbstractBank WellsForgo = new Bank("WellsForgo");
+            AbstractBank WellsFargo = new Bank("WellsFargo");
 
-            int AccNum = WellsForgo.addBankAccount(BankAccountTypeEnum.INDIVIDUAL_ACCOUNT, "Tod");
-            var account = WellsForgo.getBankAccount(AccNum);
+            int AccNum = WellsFargo.addBankAccount(BankAccountTypeEnum.INDIVIDUAL_ACCOUNT, "Tod");
+            var account = WellsFargo.getBankAccount(AccNum);
             account.Deposit(1000);
 
             Assert.Throws<TransactionException>(()=> account.Withdraw(800));
@@ -71,25 +79,27 @@ namespace BankAppTest
         public void BankTransferTest()
         {
 
-            AbstractBank WellsForgo = new Bank("WellsForgo");
+            AbstractBank WellsFargo = new Bank("WellsFargo");
 
-            AbstractBank AllE = new Bank("AllE");
+            AbstractBank Ally = new Bank("Ally");
 
-            int WellsAccNum = WellsForgo.addBankAccount(BankAccountTypeEnum.CHECKING_ACCOUNT, "Tod");
+            int WellsAccNum = WellsFargo.addBankAccount(BankAccountTypeEnum.CHECKING_ACCOUNT, "Tod");
 
-            int AllEAccNum = AllE.addBankAccount(BankAccountTypeEnum.INDIVIDUAL_ACCOUNT, "Woop");
+            int AllyAccNum = Ally.addBankAccount(BankAccountTypeEnum.INDIVIDUAL_ACCOUNT, "Woop");
 
-            var Wellsaccount = WellsForgo.getBankAccount(WellsAccNum);
-            var AllEaccount = AllE.getBankAccount(AllEAccNum);
+            var Wellsaccount = WellsFargo.getBankAccount(WellsAccNum);
+            var Allyaccount = Ally.getBankAccount(AllyAccNum);
 
             Wellsaccount.Deposit(1000);
 
-            AllEaccount.Deposit(1200);
+            Allyaccount.Deposit(1200);
 
-            AllEaccount.Transfer(WellsAccNum, WellsForgo.getRoutingNumber(), 300);
-            Assert.AreEqual(Wellsaccount.getBalance(), 1300);
-            Assert.AreEqual(AllEaccount.getBalance(), 900);
-
+            Allyaccount.Transfer(WellsAccNum, WellsFargo.getRoutingNumber(), 300);
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual(Wellsaccount.getBalance(), 1300);
+                Assert.AreEqual(Allyaccount.getBalance(), 900);
+            });
 
         }
     }

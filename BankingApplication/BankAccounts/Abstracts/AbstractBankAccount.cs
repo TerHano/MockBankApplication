@@ -27,6 +27,10 @@ namespace BankingApplication.BankAccounts.Abstracts
             }
             else
             {
+                if (initialDeposit < 0)
+                {
+                    throw new TransactionException("Amount is negative");
+                }
                 balance = initialDeposit;
                 transactions.Add(new BankTransaction(TransactionTypeEnum.INITIAL_DEPOSIT_TRANS, initialDeposit));
             }
@@ -45,6 +49,10 @@ namespace BankingApplication.BankAccounts.Abstracts
 
         public void Deposit(double Amount)
         {
+            if (Amount < 0)
+            {
+                throw new TransactionException("Amount is negative");
+            }
             balance += Amount;
             transactions.Add(new BankTransaction(TransactionTypeEnum.DEPOSIT_TRANS, Amount));
         }
