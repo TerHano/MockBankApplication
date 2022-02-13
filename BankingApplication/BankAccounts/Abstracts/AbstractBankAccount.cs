@@ -8,7 +8,7 @@ namespace BankingApplication.BankAccounts.Abstracts
      public abstract class AbstractBankAccount
     {
 
-        protected int AccountNumber;
+        protected readonly int AccountNumber;
 
         private string Owner;
 
@@ -16,12 +16,22 @@ namespace BankingApplication.BankAccounts.Abstracts
 
         protected List<BankTransaction> transactions;
 
-        public AbstractBankAccount(int AccountNum, string Owner)
+        public AbstractBankAccount(int AccountNum, string Owner, double initialDeposit = 0)
         {
             this.AccountNumber = AccountNum;
             this.Owner = Owner;
             transactions = new List<BankTransaction>();
+            if (initialDeposit == 0)
+            {
+                balance = 0;
+            }
+            else
+            {
+                balance = initialDeposit;
+                transactions.Add(new BankTransaction(TransactionTypeEnum.INITIAL_DEPOSIT_TRANS, initialDeposit));
+            }
         }
+
 
         public int getAccountNumber()
         {

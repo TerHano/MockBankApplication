@@ -9,7 +9,7 @@ namespace BankingApplication.BankAccounts.Implementation
 {
     public class IndividualAccount : AbstractInvestmentBankAccount
     {
-        public IndividualAccount(int AccountNum, string Owner) : base(AccountNum, Owner)
+        public IndividualAccount(int AccountNum, string Owner, double initialDeposit) : base(AccountNum, Owner, initialDeposit)
         {
         }
 

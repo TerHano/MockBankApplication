@@ -18,7 +18,7 @@ namespace BankingApplication
 
             int AccNum = WellsForgo.addBankAccount(BankAccountTypeEnum.CHECKING_ACCOUNT,"Tod");
 
-            int InAccNum = AllyBank.addBankAccount(BankAccountTypeEnum.INDIVIDUAL_ACCOUNT, "Mod");
+            int InAccNum = AllyBank.addBankAccount(BankAccountTypeEnum.INDIVIDUAL_ACCOUNT, "Mod",200);
 
 
             var WellAcc = WellsForgo.getBankAccount(AccNum);

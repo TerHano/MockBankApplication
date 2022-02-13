@@ -8,7 +8,7 @@ namespace BankingApplication.BankAccounts.Implementation
 {
     public class CheckingAccount : AbstractBankAccount
     {
-        public CheckingAccount(int AccountNum, string Owner) : base(AccountNum, Owner)
+        public CheckingAccount(int AccountNum, string Owner, double initialDeposit) : base(AccountNum, Owner, initialDeposit)
         {
         }
     }
