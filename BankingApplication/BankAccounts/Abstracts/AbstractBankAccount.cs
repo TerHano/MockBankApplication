@@ -102,12 +102,21 @@ namespace BankingApplication.BankAccounts.Abstracts
 
         public List<BankTransaction> getTransactions()
         {
-            Console.WriteLine(String.Format("Transactions for {0} owned by {1} \n[",AccountNumber,Owner));
+            Console.WriteLine("-------------------------------------------");
+            Console.WriteLine(String.Format("Transactions for Account {0} Owned by {1} \n[",AccountNumber,Owner));
             foreach (BankTransaction temp in transactions) {
-                String transactionStr = "Transaction Type: {0}, Amount: ${1}";
-                Console.WriteLine(String.Format(transactionStr, temp.Type, temp.Amount));
+                String transactionStr = "Transaction Type: {0}, Amount: {2}${1}";
+                if (temp.Amount < 0)
+                {
+                    Console.WriteLine(String.Format(transactionStr, temp.Type, Math.Abs(temp.Amount).ToString("N2"),"-"));
+                }
+                else
+                {
+                    Console.WriteLine(String.Format(transactionStr, temp.Type, temp.Amount.ToString("N2"),""));
+                }
             }
-            Console.WriteLine(String.Format("]\nCurrent Balance: {0}",balance));
+            Console.WriteLine(String.Format("]\nCurrent Balance: ${0}",balance.ToString("N2")));
+            Console.WriteLine("-------------------------------------------");
             return transactions;
 
         }

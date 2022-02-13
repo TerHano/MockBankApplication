@@ -31,6 +31,8 @@ namespace BankAppTest
             {
                 Assert.AreEqual(account.getBalance(), 1000);
                 Assert.Throws<TransactionException>(() => account.Deposit(-200));
+                Assert.AreEqual(account.getTransactions()[0].Amount, 1000);
+                Assert.AreEqual(account.getTransactions()[0].Type, TransactionTypeEnum.DEPOSIT_TRANS);
             });
         }
 
@@ -39,13 +41,12 @@ namespace BankAppTest
         {
             account.Withdraw(800);
 
-            Assert.AreEqual(account.getBalance(), 200);
-        }
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual(account.getBalance(), 200);
+                Assert.Throws<TransactionException>(() => account.Withdraw(8000));
+            });
 
-        [Test]
-        public void CheckingWithdrawOverDrawTest()
-        {
-            Assert.Throws<TransactionException>(()=>account.Withdraw(8000));
         }
 
         [Test]
