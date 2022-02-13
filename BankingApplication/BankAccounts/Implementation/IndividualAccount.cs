@@ -23,7 +23,7 @@ namespace BankingApplication.BankAccounts.Implementation
 
             if(Amount > 500)
             {
-                throw new TransactionException("Over Individual Limit");
+                throw new TransactionException("Over Individual Limit of 500");
             }
 
             balance -= Amount;

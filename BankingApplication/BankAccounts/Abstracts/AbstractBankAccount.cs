@@ -96,7 +96,7 @@ namespace BankingApplication.BankAccounts.Abstracts
         {
             Console.WriteLine(String.Format("Transactions for {0} owned by {1} \n[",AccountNumber,Owner));
             foreach (BankTransaction temp in transactions) {
-                String transactionStr = "Transaction Type: {0}, Amount: {1}";
+                String transactionStr = "Transaction Type: {0}, Amount: ${1}";
                 Console.WriteLine(String.Format(transactionStr, temp.Type, temp.Amount));
             }
             Console.WriteLine(String.Format("]\nCurrent Balance: {0}",balance));
