@@ -14,6 +14,7 @@
     <None Remove="Banks\" />
     <None Remove="Banks\Abstracts\" />
     <None Remove="Banks\Implementation\" />
+    <None Remove="Exceptions\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="BankAccounts\" />
@@ -24,5 +25,6 @@
     <Folder Include="Banks\" />
     <Folder Include="Banks\Abstracts\" />
     <Folder Include="Banks\Implementation\" />
+    <Folder Include="Exceptions\" />
   </ItemGroup>
 </Project>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Transactions;
 using BankingApplication.Constants;
 using BankingApplication.TransactionPOCO;
 namespace BankingApplication.BankAccounts.Abstracts
@@ -48,7 +49,7 @@ namespace BankingApplication.BankAccounts.Abstracts
         {
             if (Amount > balance)
             {
-                throw new Exception("Not enough funds");
+                throw new TransactionException("Not enough funds");
             }
 
             balance -= Amount;
@@ -59,7 +60,7 @@ namespace BankingApplication.BankAccounts.Abstracts
         {
             if (Amount > balance)
             {
-                throw new Exception("Not enough funds");
+                throw new TransactionException("Not enough funds");
             }
             transactions.Add(new BankTransaction(TransactionTypeEnum.TRANSFER_TRANS, Amount*-1));
             balance -= Amount;
@@ -75,7 +76,7 @@ namespace BankingApplication.BankAccounts.Abstracts
             var targetBankAccount = BankRoutingMap.BankDictionary[targetRoutingNumber]?.getBankAccount(targetAccountNum);
             if(targetBankAccount == null)
             {
-                throw new Exception("bank account doesnt exist");
+                throw new TransactionException("Bank account doesnt exist");
             }
             TransferWithdraw(amount);
             targetBankAccount.TransferDeposit(amount);

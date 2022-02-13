@@ -4,6 +4,7 @@ using BankingApplication.Banks.Implementation;
 using BankingApplication.Constants;
 using System;
 using BankingApplication.BankAccounts.Abstracts;
+using System.Transactions;
 
 namespace BankAppTest
 {
@@ -62,7 +63,7 @@ namespace BankAppTest
             var account = WellsForgo.getBankAccount(AccNum);
             account.Deposit(1000);
 
-            Assert.Throws<Exception>(()=> account.Withdraw(800));
+            Assert.Throws<TransactionException>(()=> account.Withdraw(800));
 
         }
 

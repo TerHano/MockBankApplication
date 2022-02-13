@@ -18,12 +18,12 @@ namespace BankingApplication.BankAccounts.Implementation
 
             if (Amount > balance)
             {
-                throw new Exception("Not enough funds");
+                throw new TransactionException("Not enough funds");
             }
 
             if(Amount > 500)
             {
-                throw new Exception("Over Individual Limit");
+                throw new TransactionException("Over Individual Limit");
             }
 
             balance -= Amount;
