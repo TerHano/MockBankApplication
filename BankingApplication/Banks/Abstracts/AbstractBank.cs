@@ -54,7 +54,7 @@ namespace BankingApplication.Banks.Abstracts
             return bankAccount;
         }
 
-        public int addBankAccount(string AccountType, string Owner, double intialDeposit = 0)
+        public int addBankAccount(BankAccountTypeEnum AccountType, string Owner, double intialDeposit = 0)
         {
             AbstractBankAccount newBankAccount = null;
             int newAccountNum = BankingAccountNumberScheme++;

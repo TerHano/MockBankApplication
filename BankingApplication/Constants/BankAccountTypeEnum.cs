@@ -1,10 +1,10 @@
 ﻿using System;
 namespace BankingApplication.Constants
 {
-    public static class BankAccountTypeEnum
+    public enum BankAccountTypeEnum
     {
-        public const string CHECKING_ACCOUNT = "CHECKING";
-        public const string INDIVIDUAL_ACCOUNT = "INDIVIDUAL";
-        public const string CORPORATE_ACCOUNT = "CORPORATE";
+        CHECKING_ACCOUNT = 1,
+        INDIVIDUAL_ACCOUNT = 2,
+        CORPORATE_ACCOUNT = 3
     }
 }
