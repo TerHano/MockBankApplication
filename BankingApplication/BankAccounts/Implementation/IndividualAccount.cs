@@ -9,7 +9,7 @@ namespace BankingApplication.BankAccounts.Implementation
 {
     public class IndividualAccount : AbstractInvestmentBankAccount
     {
-        public IndividualAccount(int AccountNum, string Owner) : base(AccountNum, Owner)
+        public IndividualAccount(int AccountNum, string Owner, double initialDeposit) : base(AccountNum, Owner, initialDeposit)
         {
         }
 
@@ -18,16 +18,16 @@ namespace BankingApplication.BankAccounts.Implementation
 
             if (Amount > balance)
             {
-                throw new Exception("Not enough funds");
+                throw new TransactionException("Not enough funds");
             }
 
             if(Amount > 500)
             {
-                throw new Exception("Over Individual Limit");
+                throw new TransactionException("Over Individual Limit of 500");
             }
 
             balance -= Amount;
-            transactions.Add(new BankTransaction(TransactionTypeEnum.WITHDRAW_TRANS, Amount * -1));
+            transactions.Add(new BankTransaction(TransactionTypeEnum.WITHDRAW_TRANS, Amount * -1,balance));
         }
     }
 }

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Transactions;
 using BankingApplication.BankAccounts.Abstracts;
 using BankingApplication.BankAccounts.Implementation;
 using BankingApplication.Constants;
+using BankingApplication.Exceptions;
 
 namespace BankingApplication.Banks.Abstracts
 {
@@ -47,28 +49,31 @@ namespace BankingApplication.Banks.Abstracts
             AbstractBankAccount bankAccount = bankAccounts.Find(x => x.getAccountNumber() == BankAccountNum);
             if(bankAccount == null)
             {
-                throw new Exception("BankAccount doesn't exist");
+                throw new BankAccountException("Bank Account doesn't exist");
             }
             return bankAccount;
         }
 
-        public int addBankAccount(string AccountType, string Owner)
+        public int addBankAccount(BankAccountTypeEnum AccountType, string Owner, double intialDeposit = 0)
         {
             AbstractBankAccount newBankAccount = null;
             int newAccountNum = BankingAccountNumberScheme++;
             switch (AccountType)
             {
                 case BankAccountTypeEnum.CHECKING_ACCOUNT:
-                    newBankAccount = new CheckingAccount(newAccountNum, Owner);
+                    newBankAccount = new CheckingAccount(newAccountNum, Owner,intialDeposit);
                     break;
                 case BankAccountTypeEnum.INDIVIDUAL_ACCOUNT:
-                    newBankAccount = new IndividualAccount(newAccountNum, Owner);
+                    newBankAccount = new IndividualAccount(newAccountNum, Owner,intialDeposit);
+                    break;
+                case BankAccountTypeEnum.CORPORATE_ACCOUNT:
+                    newBankAccount = new CorporateAccount(newAccountNum, Owner,intialDeposit);
                     break;
             }
 
             if(newBankAccount == null)
             {
-                throw new Exception("Oops");
+                throw new BankAccountException("Error creating new bank account");
             }
             bankAccounts.Add(newBankAccount);
 
