@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Transactions;
 using BankingApplication.Constants;
 using BankingApplication.TransactionPOCO;
+using ConsoleTables;
+
 namespace BankingApplication.BankAccounts.Abstracts
 {
      public abstract class AbstractBankAccount
@@ -32,7 +34,7 @@ namespace BankingApplication.BankAccounts.Abstracts
                     throw new TransactionException("Amount is negative");
                 }
                 balance = initialDeposit;
-                transactions.Add(new BankTransaction(TransactionTypeEnum.INITIAL_DEPOSIT_TRANS, initialDeposit));
+                transactions.Add(new BankTransaction(TransactionTypeEnum.INITIAL_DEPOSIT_TRANS, initialDeposit, balance));
             }
         }
 
@@ -54,13 +56,13 @@ namespace BankingApplication.BankAccounts.Abstracts
                 throw new TransactionException("Amount is negative");
             }
             balance += Amount;
-            transactions.Add(new BankTransaction(TransactionTypeEnum.DEPOSIT_TRANS, Amount));
+            transactions.Add(new BankTransaction(TransactionTypeEnum.DEPOSIT_TRANS, Amount,balance));
         }
 
         private void TransferDeposit(double Amount)
         {
             balance += Amount;
-            transactions.Add(new BankTransaction(TransactionTypeEnum.TRANSFER_TRANS, Amount));
+            transactions.Add(new BankTransaction(TransactionTypeEnum.TRANSFER_TRANS, Amount,balance));
 
         }
         public virtual void Withdraw(double Amount)
@@ -71,7 +73,7 @@ namespace BankingApplication.BankAccounts.Abstracts
             }
 
             balance -= Amount;
-            transactions.Add(new BankTransaction(TransactionTypeEnum.WITHDRAW_TRANS, Amount*-1));
+            transactions.Add(new BankTransaction(TransactionTypeEnum.WITHDRAW_TRANS, Amount*-1,balance));
 
         }
         private void TransferWithdraw(double Amount)
@@ -80,8 +82,8 @@ namespace BankingApplication.BankAccounts.Abstracts
             {
                 throw new TransactionException("Not enough funds");
             }
-            transactions.Add(new BankTransaction(TransactionTypeEnum.TRANSFER_TRANS, Amount*-1));
             balance -= Amount;
+            transactions.Add(new BankTransaction(TransactionTypeEnum.TRANSFER_TRANS, Amount * -1, balance));
 
         }
         public virtual double getBalance()
@@ -102,28 +104,22 @@ namespace BankingApplication.BankAccounts.Abstracts
 
         public List<BankTransaction> getTransactions()
         {
-            Console.WriteLine("-------------------------------------------");
-            Console.WriteLine(String.Format("Transactions for Account {0} Owned by {1} \n[",AccountNumber,Owner));
+            Console.WriteLine(String.Format("Transactions for Account ({0}) owned by {1}", AccountNumber, Owner));
+            ConsoleTable table = new("Transaction Type","Amount", "New Balance");
             foreach (BankTransaction temp in transactions) {
-                String transactionStr = "Transaction Type: {0}, Amount: {2}${1}";
-                if (temp.Amount < 0)
-                {
-                    Console.WriteLine(String.Format(transactionStr, temp.Type, Math.Abs(temp.Amount).ToString("N2"),"-"));
-                }
-                else
-                {
-                    Console.WriteLine(String.Format(transactionStr, temp.Type, temp.Amount.ToString("N2"),""));
-                }
+                string printAmount = (temp.Amount < 0) ? "-$" + Math.Abs(temp.Amount).ToString("N2") : "$" + temp.Amount.ToString("N2");
+                table.AddRow(temp.Type, printAmount,"$"+temp.CurrentBalance.ToString("N2"));
             }
-            Console.WriteLine(String.Format("]\nCurrent Balance: ${0}",balance.ToString("N2")));
-            Console.WriteLine("-------------------------------------------");
+            table.Write();
+
+            Console.WriteLine();
             return transactions;
 
         }
 
         private void addTransferTransaction(double Amount)
         {
-            transactions.Add(new BankTransaction(TransactionTypeEnum.TRANSFER_TRANS, Amount));
+            transactions.Add(new BankTransaction(TransactionTypeEnum.TRANSFER_TRANS, Amount,balance));
         }
 
 

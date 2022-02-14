@@ -16,9 +16,9 @@ namespace BankingApplication
             AbstractBank WellsForgo = new Bank("Wells Fargo");
             AbstractBank AllyBank = new Bank("Ally Bank");
 
-            int AccNum = WellsForgo.addBankAccount(BankAccountTypeEnum.CHECKING_ACCOUNT,"Tod");
+            int AccNum = WellsForgo.addBankAccount(BankAccountTypeEnum.CHECKING_ACCOUNT,"Howard");
 
-            int InAccNum = AllyBank.addBankAccount(BankAccountTypeEnum.INDIVIDUAL_ACCOUNT, "Mod",200);
+            int InAccNum = AllyBank.addBankAccount(BankAccountTypeEnum.INDIVIDUAL_ACCOUNT, "Jim",200);
 
 
             var WellAcc = WellsForgo.getBankAccount(AccNum);

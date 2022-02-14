@@ -27,7 +27,7 @@ namespace BankingApplication.BankAccounts.Implementation
             }
 
             balance -= Amount;
-            transactions.Add(new BankTransaction(TransactionTypeEnum.WITHDRAW_TRANS, Amount * -1));
+            transactions.Add(new BankTransaction(TransactionTypeEnum.WITHDRAW_TRANS, Amount * -1,balance));
         }
     }
 }

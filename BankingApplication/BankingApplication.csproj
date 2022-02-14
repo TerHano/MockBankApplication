@@ -15,6 +15,7 @@
     <None Remove="Banks\Abstracts\" />
     <None Remove="Banks\Implementation\" />
     <None Remove="Exceptions\" />
+    <None Remove="ConsoleTables" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="BankAccounts\" />
@@ -26,5 +27,8 @@
     <Folder Include="Banks\Abstracts\" />
     <Folder Include="Banks\Implementation\" />
     <Folder Include="Exceptions\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="ConsoleTables" Version="2.4.2" />
   </ItemGroup>
 </Project>

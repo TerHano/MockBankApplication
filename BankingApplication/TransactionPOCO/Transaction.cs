@@ -8,10 +8,13 @@ namespace BankingApplication.TransactionPOCO
 
         public double Amount { get; set; }
 
-        public BankTransaction(string Type, double Amount)
+        public double CurrentBalance { get; set; }
+
+        public BankTransaction(string Type, double Amount, double CurrentBalance)
         {
             this.Type = Type;
             this.Amount = Amount;
+            this.CurrentBalance = CurrentBalance;
         }
 
 
